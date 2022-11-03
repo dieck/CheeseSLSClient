@@ -27,7 +27,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	local lbIcon = AceGUI:Create("Icon")
 	lbIcon:SetRelativeWidth(0.25)
 	lbIcon:SetImage(itemTexture)
-	lbIcon:SetImageSize(25,25)
+	lbIcon:SetImageSize(35,35)
 	lbIcon:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
 		GameTooltip:SetHyperlink(itemLink)
@@ -42,7 +42,6 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbPrio:SetText(itemLink)
 	lbPrio:SetRelativeWidth(0.75)
 	f:AddChild(lbPrio)
-
 
 	CheeseSLSClient.db.profile.biddingRoll = false
 	CheeseSLSClient.db.profile.biddingFix = false
@@ -83,7 +82,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
         end
 		lbIconRoll:SetRelativeWidth(1)
 		lbIconRoll:SetImage(237285)
-		lbIconRoll:SetImageSize(40,40)
+		lbIconRoll:SetImageSize(35,35)
 		lbIconRoll:SetDisabled(true)
 		grpRoll:AddChild(lbIconRoll)
 		CheeseSLSClient.bidFrameIconRoll = lbIconRoll
@@ -129,7 +128,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
         end
 		lbIconFix:SetRelativeWidth(1)
 		lbIconFix:SetImage(133786)
-		lbIconFix:SetImageSize(40,40)
+		lbIconFix:SetImageSize(35,35)
 		lbIconFix:SetDisabled(true)
 		grpFix:AddChild(lbIconFix)
 		CheeseSLSClient.bidFrameIconFix = lbIconFix
@@ -175,7 +174,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
         end
 		lbIconFull:SetRelativeWidth(1)
 		lbIconFull:SetImage(133785)
-		lbIconFull:SetImageSize(40,40)
+		lbIconFull:SetImageSize(35,35)
 		lbIconFull:SetDisabled(true)
 		grpFull:AddChild(lbIconFull)
 		CheeseSLSClient.bidFrameIconFull = lbIconFull
