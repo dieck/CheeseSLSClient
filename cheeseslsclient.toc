@@ -1,0 +1,17 @@
+## Interface: 20503
+## Title: CheeseSLSClient
+## Notes: Addon for CheeseSLS usage to help users bid for items
+## Author: dieck
+## Version: 20221103
+## SavedVariables: CheeseSLSClientDB
+
+embeds.xml
+
+cheeseslsclient.lua
+
+locale-enUS.lua
+locale-deDE.lua
+
+gui.lua
+comms.lua
+core.lua
