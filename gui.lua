@@ -8,6 +8,16 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	local d, itemId, _, _, _, _, _, _, _, _, _, _, _, _ = strsplit(":", itemLink)
 
 	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemId)
+	
+	-- GetItemInfo is, for some dumb reason, asynchronous and cached.
+	-- It will not wait to fetch data, but return nil if not available
+	-- So give it like two seconds.
+	-- Yes, this will mean short lag. But loot distribution happens in downtime anyway.
+	-- will take care that items are pre-cached with loot list feature later
+	local sec = tonumber(time() + 2)
+	while (not itemTexture) and (time() < sec) do
+		_, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemId)
+	end 
 
 	local f = AceGUI:Create("Window")
 	f:SetTitle(L["SLS bid started"])
