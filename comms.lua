@@ -58,7 +58,9 @@ function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
 
 	-- end of bidding
 	if deserialized["command"] == "BIDDING_STOP" then
-		CheeseSLSClient.bidFrame:Hide()
+		if CheeseSLSClient.bidFrame then
+			CheeseSLSClient.bidFrame:Hide()
+		end
 	end
 
 end
