@@ -65,10 +65,17 @@ function CheeseSLSClient:ChatCommand(inc)
 	if strlt(inc) == "debug" then
 		CheeseSLSClient.db.profile.debugging = not CheeseSLSClient.db.profile.debugging
 		if CheeseSLSClient.db.profile.debugging then
-			CheeseSLSClient:Print("CheeseSLSClient DEBUGGING is enabled.")
+			CheeseSLSClient:Print("CheeseSLSClient DEBUGGING " .. L["is enabled."])
 		else
-			CheeseSLSClient:Print("CheeseSLSClient DEBUGGING is diabled.")
+			CheeseSLSClient:Print("CheeseSLSClient DEBUGGING " .. L["is disabled."])
 		end
+
+	elseif strlt(inc) == "test" then
+		
+		local itemLink = "\124cffff8000\124Hitem:199914::::::::80:::::\124h[Glowing Pebble]\124h\124r"
+		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, true, false)
+		CheeseSLSClient.bidFrame:Show()
+
 	else
 
 		if strlt(inc) == "" then
@@ -84,9 +91,9 @@ function CheeseSLSClient:ChatCommand(inc)
 		end
 
 		if CheeseSLSClient.db.profile.enabled then
-			CheeseSLSClient:Print("CheeseSLSClient is enabled.")
+			CheeseSLSClient:Print("CheeseSLSClient " .. L["is enabled."])
 		else
-			CheeseSLSClient:Print("CheeseSLSClient is diabled.")
+			CheeseSLSClient:Print("CheeseSLSClient " .. L["is disabled."])
 		end
 
 	end

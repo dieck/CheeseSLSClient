@@ -7,11 +7,10 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 
 	local d, itemId, _, _, _, _, _, _, _, _, _, _, _, _ = strsplit(":", itemLink)
 
-	local _, _, _, _, _, _, _, _, _, itemTexture, _ =
-	GetItemInfo(itemId)
+	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemId)
 
 	local f = AceGUI:Create("Window")
-	f:SetTitle("SLS bid started")
+	f:SetTitle(L["SLS bid started"])
 	f:SetStatusText("")
 	f:SetLayout("Flow")
 	f:SetWidth(350)
@@ -52,7 +51,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 
 		local btnRoll = AceGUI:Create("Button")
 		CheeseSLSClient.bidFrameBtnRoll = btnRoll
-		btnRoll:SetText("/roll")
+		btnRoll:SetText(L["/roll"])
 		btnRoll:SetRelativeWidth(1)
 		btnRoll:SetCallback("OnClick", function()
 			-- can only use Roll if i haven't rolled, and have not bid fix or full
@@ -95,7 +94,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 
 		local btnFix = AceGUI:Create("Button")
 		CheeseSLSClient.bidFrameBtnFix = btnFix
-		btnFix:SetText("fix bid")
+		btnFix:SetText(L["fix bid"])
 		btnFix:SetRelativeWidth(1)
 		btnFix:SetCallback("OnClick", function()
 			-- can only use Fix if i have not bid fix or full (roll would be ok)
@@ -141,7 +140,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 
 		local btnFull = AceGUI:Create("Button")
 		CheeseSLSClient.bidFrameBtnFull = btnFull
-		btnFull:SetText("full bid")
+		btnFull:SetText(L["full bid"])
 		btnFull:SetRelativeWidth(1)
 		btnFull:SetCallback("OnClick", function()
 			-- can only use Full if i have not bid full (roll or fix would be ok)
