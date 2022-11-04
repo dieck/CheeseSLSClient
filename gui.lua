@@ -56,10 +56,10 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		btnRoll:SetRelativeWidth(1)
 		btnRoll:SetCallback("OnClick", function()
 			-- can only use Roll if i haven't rolled, and have not bid fix or full
-			if (not CheeseSLSClient.db.profile.biddingRoll) 
+			if (not CheeseSLSClient.db.profile.biddingRoll)
 			and (not CheeseSLSClient.db.profile.biddingFix)
 			and (not CheeseSLSClient.db.profile.biddingFull) then
-				RandomRoll(1, 100) 
+				RandomRoll(1, 100)
 			end
 			CheeseSLSClient.db.profile.biddingRoll = true
 			CheeseSLSClient.bidFrameBtnRoll:SetDisabled(true)
@@ -79,7 +79,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 					self.label:SetTextColor(1, 1, 1)
 					self.image:SetVertexColor(1, 1, 1, 1)
 			end
-        end
+		end
 		lbIconRoll:SetRelativeWidth(1)
 		lbIconRoll:SetImage(237285)
 		lbIconRoll:SetImageSize(35,35)
@@ -97,13 +97,13 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		CheeseSLSClient.bidFrameBtnFix = btnFix
 		btnFix:SetText("fix bid")
 		btnFix:SetRelativeWidth(1)
-		btnFix:SetCallback("OnClick", function() 
+		btnFix:SetCallback("OnClick", function()
 			-- can only use Fix if i have not bid fix or full (roll would be ok)
 			if (not CheeseSLSClient.db.profile.biddingFix)
 			and (not CheeseSLSClient.db.profile.biddingFull) then
 				if acceptWhispers then
 					SendChatMessage("f", "WHISPER", nil, acceptWhispers)
-				else 
+				else
 					SendChatMessage("f", "RAID")
 				end
 			end
@@ -112,7 +112,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 			CheeseSLSClient.bidFrameBtnFix:SetDisabled(true)
 		end)
 		grpFix:AddChild(btnFix)
-	
+
 		local lbIconFix = AceGUI:Create("Icon")
 		lbIconFix["SetDisabled"] = function(self, disabled)
 			self.disabled = disabled
@@ -125,7 +125,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 					self.label:SetTextColor(1, 1, 1)
 					self.image:SetVertexColor(1, 1, 1, 1)
 			end
-        end
+		end
 		lbIconFix:SetRelativeWidth(1)
 		lbIconFix:SetImage(133786)
 		lbIconFix:SetImageSize(35,35)
@@ -138,17 +138,17 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 
 	local grpFull = AceGUI:Create("SimpleGroup")
 	grpFull:SetRelativeWidth(0.33)
-	
+
 		local btnFull = AceGUI:Create("Button")
 		CheeseSLSClient.bidFrameBtnFull = btnFull
 		btnFull:SetText("full bid")
 		btnFull:SetRelativeWidth(1)
-		btnFull:SetCallback("OnClick", function() 
+		btnFull:SetCallback("OnClick", function()
 			-- can only use Full if i have not bid full (roll or fix would be ok)
-			if (not CheeseSLSClient.db.profile.biddingFull) then 
+			if (not CheeseSLSClient.db.profile.biddingFull) then
 				if acceptWhispers then
 					SendChatMessage("+", "WHISPER", nil, acceptWhispers)
-				else 
+				else
 					SendChatMessage("+", "RAID")
 				end
 			end
@@ -171,7 +171,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 					self.label:SetTextColor(1, 1, 1)
 					self.image:SetVertexColor(1, 1, 1, 1)
 			end
-        end
+		end
 		lbIconFull:SetRelativeWidth(1)
 		lbIconFull:SetImage(133785)
 		lbIconFull:SetImageSize(35,35)

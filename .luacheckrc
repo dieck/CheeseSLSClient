@@ -30,7 +30,10 @@ ignore = {
 }
 globals = {
 
-  -- misc custom
+	-- CheeseSLSClient
+	"CheeseSLSClient",
+
+	-- misc custom
 	"AceGUIWidgetLSMlists",
 	"CUSTOM_CLASS_COLORS",
 	"LibStub",
