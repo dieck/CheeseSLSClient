@@ -77,7 +77,7 @@ function CheeseSLSClient:ChatCommand(inc)
 		end
 		
 		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, true, false)
-		CheeseSLSClient.bidFrame:Show()
+		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
 
 	else
 

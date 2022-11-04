@@ -36,7 +36,7 @@ function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
 		if (deserialized["acceptwhisper"]) then acceptWhisper = sender end
 
 		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhisper)
-		CheeseSLSClient.bidFrame:Show()
+		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
 	end
 
 	-- somebody rolled? Then show roll icon
@@ -57,9 +57,7 @@ function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
 
 	-- end of bidding
 	if deserialized["command"] == "BIDDING_STOP" then
-		if CheeseSLSClient.bidFrame then
-			CheeseSLSClient.bidFrame:Hide()
-		end
+		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Hide() end
 	end
 
 end
