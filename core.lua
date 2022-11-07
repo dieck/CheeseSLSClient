@@ -75,7 +75,7 @@ function CheeseSLSClient:ChatCommand(inc)
 		if #inc > 4 then
 			itemLink = inc:sub(5)
 		end
-		
+
 		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, true, false)
 		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
 

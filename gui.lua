@@ -4,11 +4,11 @@ local AceGUI = LibStub("AceGUI-3.0")
 function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	-- called without link? bail out
 	if not itemLink then return end
-	
+
 	local _, itemId, _, _, _, _, _, _, _, _, _, _, _, _ = strsplit(":", itemLink)
 	if (not itemId) or (tostring(itemId) ~= tostring(tonumber(itemId))) then return end -- obviously something wrong with the link
 	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemId)
-	
+
 	local f = AceGUI:Create("Window")
 	f:SetTitle(L["SLS bid started"])
 	f:SetStatusText("")
@@ -35,11 +35,11 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbIcon:SetCallback("OnLeave", function(widget)
 		GameTooltip:Hide()
 	end)
-	
+
 	f:AddChild(lbIcon)
 
 	if (not itemTexture) then
-		-- see if it turns up later (code needs to be AFTER bidFrameLbIcon exists ;)) 
+		-- see if it turns up later (code needs to be AFTER bidFrameLbIcon exists ;))
 		CheeseSLSClient.waitForItemInfoReceived = itemId
 		self:RegisterEvent("GET_ITEM_INFO_RECEIVED")
 	end
@@ -199,16 +199,16 @@ function CheeseSLSClient:GET_ITEM_INFO_RECEIVED(event, itemID, success)
 	if itemID ~= CheeseSLSClient.waitForItemInfoReceived then return end
 
 	-- see if item texture is now available
-	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemId)
-	
+	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemID)
+
 	-- if not, keep waiting, might turn up later
 	if not itemTexture then return end
-	
+
 	-- ok, we found it!
 	-- stop looking
 	CheeseSLSClient.waitForItemInfoReceived = nil
 	self:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
-	
+
 	-- set as icon
 	CheeseSLSClient.bidFrameLbIcon:SetImage(itemTexture)
 end
