@@ -31,12 +31,23 @@ function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
 	if deserialized["command"] == "BIDDING_START" then
 
 		local itemLink = deserialized["itemLink"]
+		local _, itemId, _, _, _, _, _, _, _, _, _, _, _, _ = strsplit(":", itemLink)
 		local acceptRolls = (deserialized["acceptrolls"])
 		local acceptWhisper = false
+
 		if (deserialized["acceptwhisper"]) then acceptWhisper = sender end
 
-		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhisper)
-		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
+		if not CheeseSLSClient.db.profile.ignorelist[tonumber(itemId)] then
+			CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhisper)
+			if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
+		end
+
+		if CheeseSLSClient.db.profile.alertlist[tonumber(itemId)] then
+			-- ready check sound (see https://github.com/tomrus88/BlizzardInterfaceCode/blob/master/Interface/SharedXML/SoundKitConstants.lua)
+			PlaySound(8960, "master")
+			UIFrameFlash(UIParent, 0.1, 0.1, 1, true, 0, 0)
+		end
+
 	end
 
 	-- somebody rolled? Then show roll icon
@@ -53,7 +64,6 @@ function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
 	if (deserialized["command"] == "GOT_FULL") and (CheeseSLSClient.bidFrameIconFull) then
 		CheeseSLSClient.bidFrameIconFull:SetDisabled(false)
 	end
-
 
 	-- end of bidding
 	if deserialized["command"] == "BIDDING_STOP" then

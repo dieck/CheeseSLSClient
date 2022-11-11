@@ -41,15 +41,16 @@ function CheeseSLSClient:OnInitialize()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("CheeseSLSClient", self.optionsTable)
 	self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("CheeseSLSClient", "CheeseSLSClient")
 
-	self:RegisterChatCommand("cslsclient", "ChatCommand")
-	self:RegisterChatCommand("slsclient", "ChatCommand");
-
-	self:RegisterComm(CheeseSLSClient.commPrefix, "OnCommReceived")
-
+	if not CheeseSLSClient.db.profile.alertlist then CheeseSLSClient.db.profile.alertlist = {} end
+	if not CheeseSLSClient.db.profile.ignorelist then CheeseSLSClient.db.profile.ignorelist = {} end
 end
 
 function CheeseSLSClient:OnEnable()
 	-- Called when the addon is enabled
+	self:RegisterChatCommand("cslsclient", "ChatCommand")
+	self:RegisterChatCommand("slsclient", "ChatCommand");
+
+	self:RegisterComm(CheeseSLSClient.commPrefix, "OnCommReceived")
 end
 
 function CheeseSLSClient:OnDisable()

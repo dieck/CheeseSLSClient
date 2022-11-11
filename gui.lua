@@ -47,6 +47,14 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	local lbPrio = AceGUI:Create("InteractiveLabel")
 	lbPrio:SetText(itemLink)
 	lbPrio:SetRelativeWidth(0.75)
+	lbPrio:SetCallback("OnEnter", function(widget)
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		GameTooltip:SetHyperlink(itemLink)
+		GameTooltip:Show()
+	end)
+	lbPrio:SetCallback("OnLeave", function(widget)
+		GameTooltip:Hide()
+	end)
 	f:AddChild(lbPrio)
 
 	CheeseSLSClient.db.profile.biddingRoll = false
@@ -192,14 +200,12 @@ end
 
 -- asynch handling of cached item infos
 function CheeseSLSClient:GET_ITEM_INFO_RECEIVED(event, itemID, success)
-	-- don't handle unsuccessful
-	if not success then return end
 
 	-- wait for the item we are waiting for (others might come in through other requests)
-	if itemID ~= CheeseSLSClient.waitForItemInfoReceived then return end
+	if tonumber(itemID) ~= tonumber(CheeseSLSClient.waitForItemInfoReceived) then return end
 
 	-- see if item texture is now available
-	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemID)
+	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(tonumber(itemID))
 
 	-- if not, keep waiting, might turn up later
 	if not itemTexture then return end
@@ -210,5 +216,5 @@ function CheeseSLSClient:GET_ITEM_INFO_RECEIVED(event, itemID, success)
 	self:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
 
 	-- set as icon
-	CheeseSLSClient.bidFrameLbIcon:SetImage(itemTexture)
+	if CheeseSLSClient.bidFrameLbIcon then CheeseSLSClient.bidFrameLbIcon:SetImage(itemTexture) end
 end
