@@ -72,6 +72,7 @@ function CheeseSLSClient:ChatCommand(inc)
 
 	elseif strlt(inc:sub(0,4)) == "test" then
 		local itemLink = "\124cffff8000\124Hitem:199914::::::::80:::::\124h[Glowing Pebble]\124h\124r"
+		itemLink = "\124cffff8000\124Hitem:22630::::::::80:::::\124h[Atiesh, Greatstaff of the Guardian]\124h\124r"
 
 		if #inc > 4 then
 			itemLink = inc:sub(5)

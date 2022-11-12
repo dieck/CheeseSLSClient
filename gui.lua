@@ -35,7 +35,13 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbIcon:SetCallback("OnLeave", function(widget)
 		GameTooltip:Hide()
 	end)
-
+	-- if pawn is installed, open compare if you click on the icon
+	if (PawnCommand) then
+		lbIcon.paramItemLink = itemLink
+		lbIcon:SetCallback("OnClick", function(widget)
+			PawnCommand("compare " .. widget.paramItemLink)
+		end)
+	end
 	f:AddChild(lbIcon)
 
 	if (not itemTexture) then

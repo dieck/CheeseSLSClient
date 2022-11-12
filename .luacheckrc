@@ -32,6 +32,7 @@ globals = {
 
 	-- CheeseSLSClient
 	"CheeseSLSClient",
+	"PawnCommand", -- check for existance of addon Pawn
 
 	-- misc custom
 	"AceGUIWidgetLSMlists",
