@@ -5,6 +5,9 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	-- called without link? bail out
 	if not itemLink then return end
 
+	-- secret Drungk-Everlook mode ;)
+	local isDrungk = (UnitName("player") == "Drungk" and GetRealmName() == "Everlook")
+
 	local _, itemId, _, _, _, _, _, _, _, _, _, _, _, _ = strsplit(":", itemLink)
 	if (not itemId) or (tostring(itemId) ~= tostring(tonumber(itemId))) then return end -- obviously something wrong with the link
 	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(itemId)
@@ -14,7 +17,9 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	f:SetStatusText("")
 	f:SetLayout("Flow")
 	f:SetWidth(350)
-	f:SetHeight(165)
+	local windowheight = 165
+	if isDrungk then windowheight = windowheight + 75 end
+	f:SetHeight(windowheight)
 	f:SetCallback("OnClose",function(widget) AceGUI:Release(widget) end)
 
 	-- close on escape
@@ -200,6 +205,15 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		CheeseSLSClient.bidFrameIconFull = lbIconFull
 
 	f:AddChild(grpFull)
+
+	if isDrungk then
+		local btnDrungk = AceGUI:Create("Button")
+		btnDrungk:SetText("DRUNGK PASST")
+		btnDrungk:SetRelativeWidth(1)
+		btnDrungk:SetHeight(75)
+		btnDrungk:SetCallback("OnClick",function(widget) widget.parent:Hide() end)
+		f:AddChild(btnDrungk)
+	end
 
 	return f
 end
