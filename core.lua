@@ -41,8 +41,8 @@ function CheeseSLSClient:OnInitialize()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("CheeseSLSClient", self.optionsTable)
 	self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("CheeseSLSClient", "CheeseSLSClient")
 
-	if not CheeseSLSClient.db.profile.alertlist then CheeseSLSClient.db.profile.alertlist = {} end
-	if not CheeseSLSClient.db.profile.ignorelist then CheeseSLSClient.db.profile.ignorelist = {} end
+	if not self.db.profile.alertlist then self.db.profile.alertlist = {} end
+	if not self.db.profile.ignorelist then self.db.profile.ignorelist = {} end
 end
 
 function CheeseSLSClient:OnEnable()
@@ -50,7 +50,7 @@ function CheeseSLSClient:OnEnable()
 	self:RegisterChatCommand("cslsclient", "ChatCommand")
 	self:RegisterChatCommand("slsclient", "ChatCommand");
 
-	self:RegisterComm(CheeseSLSClient.commPrefix, "OnCommReceived")
+	self:RegisterComm(self.commPrefix, "OnCommReceived")
 end
 
 function CheeseSLSClient:OnDisable()
@@ -63,11 +63,11 @@ end
 
 function CheeseSLSClient:ChatCommand(inc)
 	if strlt(inc) == "debug" then
-		CheeseSLSClient.db.profile.debugging = not CheeseSLSClient.db.profile.debugging
-		if CheeseSLSClient.db.profile.debugging then
-			CheeseSLSClient:Print("CheeseSLSClient DEBUGGING " .. L["is enabled."])
+		self.db.profile.debugging = not self.db.profile.debugging
+		if self.db.profile.debugging then
+			self:Print("CheeseSLSClient DEBUGGING " .. L["is enabled."])
 		else
-			CheeseSLSClient:Print("CheeseSLSClient DEBUGGING " .. L["is disabled."])
+			self:Print("CheeseSLSClient DEBUGGING " .. L["is disabled."])
 		end
 
 	elseif strlt(inc:sub(0,4)) == "test" then
@@ -78,27 +78,27 @@ function CheeseSLSClient:ChatCommand(inc)
 			itemLink = inc:sub(5)
 		end
 
-		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, true, false)
-		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
+		self.bidFrame = self:createBidFrame(itemLink, true, false)
+		if self.bidFrame then self.bidFrame:Show() end
 
 	else
 
 		if strlt(inc) == "" then
-			CheeseSLSClient.db.profile.enabled = not CheeseSLSClient.db.profile.enabled
+			self.db.profile.enabled = not self.db.profile.enabled
 		end
 
 		if (strlt(inc) == "enable") or (strlt(inc) == "enabled") or (strlt(inc) == "on") then
-			CheeseSLSClient.db.profile.enabled = true
+			self.db.profile.enabled = true
 		end
 
 		if (strlt(inc) == "disable") or (strlt(inc) == "disabled") or (strlt(inc) == "off") then
-			CheeseSLSClient.db.profile.enabled = false
+			self.db.profile.enabled = false
 		end
 
-		if CheeseSLSClient.db.profile.enabled then
-			CheeseSLSClient:Print("CheeseSLSClient " .. L["is enabled."])
+		if self.db.profile.enabled then
+			self:Print("CheeseSLSClient " .. L["is enabled."])
 		else
-			CheeseSLSClient:Print("CheeseSLSClient " .. L["is disabled."])
+			self:Print("CheeseSLSClient " .. L["is disabled."])
 		end
 
 	end
@@ -107,8 +107,8 @@ end
 
 
 function CheeseSLSClient:Debug(t)
-	if (CheeseSLSClient.db.profile.debugging) then
-		CheeseSLSClient:Print("CheeseSLSClient DEBUG: " .. t)
+	if (self.db.profile.debugging) then
+		self:Print("CheeseSLSClient DEBUG: " .. t)
 	end
 end
 

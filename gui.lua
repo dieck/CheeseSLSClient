@@ -22,19 +22,21 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	f:SetHeight(windowheight)
 	f:SetCallback("OnClose",function(widget) AceGUI:Release(widget) end)
 
+	f.paramItemLink = itemLink
+
 	-- close on escape
-	local frameName = "CheeseSLSClient.bidFrameFrame"
+	local frameName = "CheeseSLSClientBidFrameFrame"
 	_G[frameName] = f.frame
 	tinsert(UISpecialFrames, frameName)
 
 	local lbIcon = AceGUI:Create("Icon")
-	CheeseSLSClient.bidFrameLbIcon = lbIcon
+	self.bidFrameLbIcon = lbIcon
 	lbIcon:SetRelativeWidth(0.25)
 	lbIcon:SetImage(itemTexture)
 	lbIcon:SetImageSize(35,35)
 	lbIcon:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetHyperlink(itemLink)
+		GameTooltip:SetHyperlink(widget.parent.paramItemLink)
 		GameTooltip:Show()
 	end)
 	lbIcon:SetCallback("OnLeave", function(widget)
@@ -42,16 +44,15 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	end)
 	-- if pawn is installed, open compare if you click on the icon
 	if (PawnCommand) then
-		lbIcon.paramItemLink = itemLink
 		lbIcon:SetCallback("OnClick", function(widget)
-			PawnCommand("compare " .. widget.paramItemLink)
+			PawnCommand("compare " .. widget.parent.paramItemLink)
 		end)
 	end
 	f:AddChild(lbIcon)
 
 	if (not itemTexture) then
 		-- see if it turns up later (code needs to be AFTER bidFrameLbIcon exists ;))
-		CheeseSLSClient.waitForItemInfoReceived = itemId
+		self.waitForItemInfoReceived = itemId
 		self:RegisterEvent("GET_ITEM_INFO_RECEIVED")
 	end
 
@@ -60,7 +61,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbPrio:SetRelativeWidth(0.75)
 	lbPrio:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetHyperlink(itemLink)
+		GameTooltip:SetHyperlink(widget.parent.paramItemLink)
 		GameTooltip:Show()
 	end)
 	lbPrio:SetCallback("OnLeave", function(widget)
@@ -68,18 +69,18 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	end)
 	f:AddChild(lbPrio)
 
-	CheeseSLSClient.db.profile.biddingRoll = false
-	CheeseSLSClient.db.profile.biddingFix = false
-	CheeseSLSClient.db.profile.biddingFull = false
+	self.db.profile.biddingRoll = false
+	self.db.profile.biddingFix = false
+	self.db.profile.biddingFull = false
 
 	local grpRoll = AceGUI:Create("SimpleGroup")
 	grpRoll:SetRelativeWidth(0.33)
 
 		local btnRoll = AceGUI:Create("Button")
-		CheeseSLSClient.bidFrameBtnRoll = btnRoll
+		f.bidFrameBtnRoll = btnRoll
 		btnRoll:SetText(L["/roll"])
 		btnRoll:SetRelativeWidth(1)
-		btnRoll:SetCallback("OnClick", function()
+		btnRoll:SetCallback("OnClick", function(widget)
 			-- can only use Roll if i haven't rolled, and have not bid fix or full
 			if (not CheeseSLSClient.db.profile.biddingRoll)
 			and (not CheeseSLSClient.db.profile.biddingFix)
@@ -87,7 +88,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 				RandomRoll(1, 100)
 			end
 			CheeseSLSClient.db.profile.biddingRoll = true
-			CheeseSLSClient.bidFrameBtnRoll:SetDisabled(true)
+			widget.parent.bidFrameBtnRoll:SetDisabled(true)
 		end)
 		if (not acceptRolls) then btnRoll:SetDisabled(true) end
 		grpRoll:AddChild(btnRoll)
@@ -110,7 +111,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		lbIconRoll:SetImageSize(35,35)
 		lbIconRoll:SetDisabled(true)
 		grpRoll:AddChild(lbIconRoll)
-		CheeseSLSClient.bidFrameIconRoll = lbIconRoll
+		self.bidFrameIconRoll = lbIconRoll
 
 	f:AddChild(grpRoll)
 
@@ -119,7 +120,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	grpFix:SetRelativeWidth(0.33)
 
 		local btnFix = AceGUI:Create("Button")
-		CheeseSLSClient.bidFrameBtnFix = btnFix
+		f.bidFrameBtnFix = btnFix
 		btnFix:SetText(L["fix bid"])
 		btnFix:SetRelativeWidth(1)
 		btnFix:SetCallback("OnClick", function()
@@ -133,8 +134,8 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 				end
 			end
 			CheeseSLSClient.db.profile.biddingFix = true
-			CheeseSLSClient.bidFrameBtnRoll:SetDisabled(true)
-			CheeseSLSClient.bidFrameBtnFix:SetDisabled(true)
+			widget.parent.bidFrameBtnRoll:SetDisabled(true)
+			widget.parent.bidFrameBtnFix:SetDisabled(true)
 		end)
 		grpFix:AddChild(btnFix)
 
@@ -156,7 +157,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		lbIconFix:SetImageSize(35,35)
 		lbIconFix:SetDisabled(true)
 		grpFix:AddChild(lbIconFix)
-		CheeseSLSClient.bidFrameIconFix = lbIconFix
+		self.bidFrameIconFix = lbIconFix
 
 	f:AddChild(grpFix)
 
@@ -165,7 +166,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	grpFull:SetRelativeWidth(0.33)
 
 		local btnFull = AceGUI:Create("Button")
-		CheeseSLSClient.bidFrameBtnFull = btnFull
+		f.bidFrameBtnFull = btnFull
 		btnFull:SetText(L["full bid"])
 		btnFull:SetRelativeWidth(1)
 		btnFull:SetCallback("OnClick", function()
@@ -178,9 +179,9 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 				end
 			end
 			CheeseSLSClient.db.profile.biddingFull = true
-			CheeseSLSClient.bidFrameBtnRoll:SetDisabled(true)
-			CheeseSLSClient.bidFrameBtnFix:SetDisabled(true)
-			CheeseSLSClient.bidFrameBtnFull:SetDisabled(true)
+			widget.parent.bidFrameBtnRoll:SetDisabled(true)
+			widget.parent.bidFrameBtnFix:SetDisabled(true)
+			widget.parent.bidFrameBtnFull:SetDisabled(true)
 		end)
 		grpFull:AddChild(btnFull)
 
@@ -202,7 +203,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		lbIconFull:SetImageSize(35,35)
 		lbIconFull:SetDisabled(true)
 		grpFull:AddChild(lbIconFull)
-		CheeseSLSClient.bidFrameIconFull = lbIconFull
+		self.bidFrameIconFull = lbIconFull
 
 	f:AddChild(grpFull)
 
@@ -222,7 +223,7 @@ end
 function CheeseSLSClient:GET_ITEM_INFO_RECEIVED(event, itemID, success)
 
 	-- wait for the item we are waiting for (others might come in through other requests)
-	if tonumber(itemID) ~= tonumber(CheeseSLSClient.waitForItemInfoReceived) then return end
+	if tonumber(itemID) ~= tonumber(self.waitForItemInfoReceived) then return end
 
 	-- see if item texture is now available
 	local _, _, _, _, _, _, _, _, _, itemTexture, _ = GetItemInfo(tonumber(itemID))
@@ -232,9 +233,9 @@ function CheeseSLSClient:GET_ITEM_INFO_RECEIVED(event, itemID, success)
 
 	-- ok, we found it!
 	-- stop looking
-	CheeseSLSClient.waitForItemInfoReceived = nil
+	self.waitForItemInfoReceived = nil
 	self:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
 
 	-- set as icon
-	if CheeseSLSClient.bidFrameLbIcon then CheeseSLSClient.bidFrameLbIcon:SetImage(itemTexture) end
+	if self.bidFrameLbIcon then self.bidFrameLbIcon:SetImage(itemTexture) end
 end
