@@ -37,12 +37,12 @@ function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
 
 		if (deserialized["acceptwhisper"]) then acceptWhisper = sender end
 
-		if not self.db.profile.ignorelist[tonumber(itemId)] then
+		if self.db.profile.notificationHandling[tonumber(itemId)] ~= "IGNORE" then
 			self.bidFrame = self:createBidFrame(itemLink, acceptRolls, acceptWhisper)
 			if self.bidFrame then self.bidFrame:Show() end
 		end
 
-		if self.db.profile.alertlist[tonumber(itemId)] then
+		if self.db.profile.notificationHandling[tonumber(itemId)] == "ALERT" then
 			-- ready check sound (see https://github.com/tomrus88/BlizzardInterfaceCode/blob/master/Interface/SharedXML/SoundKitConstants.lua)
 			PlaySound(8960, "master")
 			UIFrameFlash(UIParent, 0.1, 0.1, 1, true, 0, 0)

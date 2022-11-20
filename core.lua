@@ -41,8 +41,7 @@ function CheeseSLSClient:OnInitialize()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("CheeseSLSClient", self.optionsTable)
 	self.optionsFrame = LibStub("AceConfigDialog-3.0"):AddToBlizOptions("CheeseSLSClient", "CheeseSLSClient")
 
-	if not self.db.profile.alertlist then self.db.profile.alertlist = {} end
-	if not self.db.profile.ignorelist then self.db.profile.ignorelist = {} end
+	if not self.db.profile.notificationHandling then self.db.profile.notificationHandling = {} end
 end
 
 function CheeseSLSClient:OnEnable()

@@ -123,7 +123,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		f.bidFrameBtnFix = btnFix
 		btnFix:SetText(L["fix bid"])
 		btnFix:SetRelativeWidth(1)
-		btnFix:SetCallback("OnClick", function()
+		btnFix:SetCallback("OnClick", function(widget)
 			-- can only use Fix if i have not bid fix or full (roll would be ok)
 			if (not CheeseSLSClient.db.profile.biddingFix)
 			and (not CheeseSLSClient.db.profile.biddingFull) then
@@ -169,7 +169,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 		f.bidFrameBtnFull = btnFull
 		btnFull:SetText(L["full bid"])
 		btnFull:SetRelativeWidth(1)
-		btnFull:SetCallback("OnClick", function()
+		btnFull:SetCallback("OnClick", function(widget)
 			-- can only use Full if i have not bid full (roll or fix would be ok)
 			if (not CheeseSLSClient.db.profile.biddingFull) then
 				if acceptWhispers then
