@@ -22,7 +22,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	f:SetHeight(windowheight)
 	f:SetCallback("OnClose",function(widget) AceGUI:Release(widget) end)
 
-	f.paramItemLink = itemLink
+	f:SetUserData("itemLink", itemLink)
 
 	-- close on escape
 	local frameName = "CheeseSLSClientBidFrameFrame"
@@ -36,7 +36,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbIcon:SetImageSize(35,35)
 	lbIcon:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetHyperlink(widget.parent.paramItemLink)
+		GameTooltip:SetHyperlink(widget.parent:GetUserData("itemLink"))
 		GameTooltip:Show()
 	end)
 	lbIcon:SetCallback("OnLeave", function(widget)
@@ -45,7 +45,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	-- if pawn is installed, open compare if you click on the icon
 	if (PawnCommand) then
 		lbIcon:SetCallback("OnClick", function(widget)
-			PawnCommand("compare " .. widget.parent.paramItemLink)
+			PawnCommand("compare " .. widget.parent:GetUserData("itemLink"))
 		end)
 	end
 	f:AddChild(lbIcon)
@@ -61,7 +61,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbPrio:SetRelativeWidth(0.75)
 	lbPrio:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetHyperlink(widget.parent.paramItemLink)
+		GameTooltip:SetHyperlink(widget.parent:GetUserData("itemLink"))
 		GameTooltip:Show()
 	end)
 	lbPrio:SetCallback("OnLeave", function(widget)
