@@ -22,7 +22,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	f:SetHeight(windowheight)
 	f:SetCallback("OnClose",function(widget) AceGUI:Release(widget) end)
 
-	f.paramItemLink = itemLink
+	f:SetUserData("itemLink", itemLink)
 
 	-- close on escape
 	local frameName = "CheeseSLSClientBidFrameFrame"
@@ -36,7 +36,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbIcon:SetImageSize(35,35)
 	lbIcon:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetHyperlink(widget.parent.paramItemLink)
+		GameTooltip:SetHyperlink(widget.parent:GetUserData("itemLink"))
 		GameTooltip:Show()
 	end)
 	lbIcon:SetCallback("OnLeave", function(widget)
@@ -45,7 +45,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	-- if pawn is installed, open compare if you click on the icon
 	if (PawnCommand) then
 		lbIcon:SetCallback("OnClick", function(widget)
-			PawnCommand("compare " .. widget.parent.paramItemLink)
+			PawnCommand("compare " .. widget.parent:GetUserData("itemLink"))
 		end)
 	end
 	f:AddChild(lbIcon)
@@ -61,7 +61,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	lbPrio:SetRelativeWidth(0.75)
 	lbPrio:SetCallback("OnEnter", function(widget)
 		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetHyperlink(widget.parent.paramItemLink)
+		GameTooltip:SetHyperlink(widget.parent:GetUserData("itemLink"))
 		GameTooltip:Show()
 	end)
 	lbPrio:SetCallback("OnLeave", function(widget)
@@ -77,7 +77,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	grpRoll:SetRelativeWidth(0.33)
 
 		local btnRoll = AceGUI:Create("Button")
-		f.bidFrameBtnRoll = btnRoll
+		f:SetUserData("btnRoll", btnRoll)
 		btnRoll:SetText(L["/roll"])
 		btnRoll:SetRelativeWidth(1)
 		btnRoll:SetCallback("OnClick", function(widget)
@@ -88,7 +88,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 				RandomRoll(1, 100)
 			end
 			CheeseSLSClient.db.profile.biddingRoll = true
-			widget.parent.bidFrameBtnRoll:SetDisabled(true)
+			widget.parent.parent:GetUserData("btnRoll"):SetDisabled(true)
 		end)
 		if (not acceptRolls) then btnRoll:SetDisabled(true) end
 		grpRoll:AddChild(btnRoll)
@@ -120,7 +120,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	grpFix:SetRelativeWidth(0.33)
 
 		local btnFix = AceGUI:Create("Button")
-		f.bidFrameBtnFix = btnFix
+		f:SetUserData("btnFix", btnFix)
 		btnFix:SetText(L["fix bid"])
 		btnFix:SetRelativeWidth(1)
 		btnFix:SetCallback("OnClick", function(widget)
@@ -134,8 +134,8 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 				end
 			end
 			CheeseSLSClient.db.profile.biddingFix = true
-			widget.parent.bidFrameBtnRoll:SetDisabled(true)
-			widget.parent.bidFrameBtnFix:SetDisabled(true)
+			widget.parent.parent:GetUserData("btnRoll"):SetDisabled(true)
+			widget.parent.parent:GetUserData("btnFix"):SetDisabled(true)
 		end)
 		grpFix:AddChild(btnFix)
 
@@ -166,7 +166,7 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 	grpFull:SetRelativeWidth(0.33)
 
 		local btnFull = AceGUI:Create("Button")
-		f.bidFrameBtnFull = btnFull
+		f:SetUserData("btnFull", btnFull)
 		btnFull:SetText(L["full bid"])
 		btnFull:SetRelativeWidth(1)
 		btnFull:SetCallback("OnClick", function(widget)
@@ -179,9 +179,9 @@ function CheeseSLSClient:createBidFrame(itemLink, acceptRolls, acceptWhispers)
 				end
 			end
 			CheeseSLSClient.db.profile.biddingFull = true
-			widget.parent.bidFrameBtnRoll:SetDisabled(true)
-			widget.parent.bidFrameBtnFix:SetDisabled(true)
-			widget.parent.bidFrameBtnFull:SetDisabled(true)
+			widget.parent.parent:GetUserData("btnRoll"):SetDisabled(true)
+			widget.parent.parent:GetUserData("btnFix"):SetDisabled(true)
+			widget.parent.parent:GetUserData("btnFull"):SetDisabled(true)
 		end)
 		grpFull:AddChild(btnFull)
 
