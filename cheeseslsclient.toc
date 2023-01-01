@@ -2,7 +2,7 @@
 ## Title: CheeseSLSClient
 ## Notes: Addon for CheeseSLS usage to help users bid for items
 ## Author: dieck
-## Version: 20221123
+## Version: 20230101
 ## SavedVariables: CheeseSLSClientDB
 
 embeds.xml
