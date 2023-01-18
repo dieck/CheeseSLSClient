@@ -1,8 +1,8 @@
-## Interface: 30400
+## Interface: 30401
 ## Title: CheeseSLSClient
 ## Notes: Addon for CheeseSLS usage to help users bid for items
 ## Author: dieck
-## Version: 20230101
+## Version: 20230118
 ## SavedVariables: CheeseSLSClientDB
 
 embeds.xml

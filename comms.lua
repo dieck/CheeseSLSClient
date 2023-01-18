@@ -4,11 +4,6 @@ local AceGUI = LibStub("AceGUI-3.0")
 -- get information from CheeseSLS
 
 function CheeseSLSClient:OnCommReceived(prefix, message, distribution, sender)
-	-- addon disabled? don't do anything
-	if not CheeseSLSClient.db.profile.enabled then
-	  return
-	end
-
 	-- playerName may contain "-REALM"
 	sender = strsplit("-", sender)
 

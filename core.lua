@@ -5,7 +5,6 @@ CheeseSLSClient.commVersion = 20221103
 
 local defaults = {
 	profile = {
-		enabled = true,
 		debugging = false,
 	}
 }
@@ -13,15 +12,6 @@ local defaults = {
 CheeseSLSClient.optionsTable = {
 	type = "group",
 	args = {
-		enabled = {
-			name = "Enabled",
-			desc = "Enabled",
-			type = "toggle",
-			set = function(info,val)
-				CheeseSLSClient.db.profile.enabled = val
-			end,
-			get = function(info) return CheeseSLSClient.db.profile.enabled end,
-		},
 		debugging = {
 			name = "Debug",
 			desc = "Debug",
@@ -79,26 +69,6 @@ function CheeseSLSClient:ChatCommand(inc)
 
 		CheeseSLSClient.bidFrame = CheeseSLSClient:createBidFrame(itemLink, true, false)
 		if CheeseSLSClient.bidFrame then CheeseSLSClient.bidFrame:Show() end
-
-	else
-
-		if strlt(inc) == "" then
-			CheeseSLSClient.db.profile.enabled = not CheeseSLSClient.db.profile.enabled
-		end
-
-		if (strlt(inc) == "enable") or (strlt(inc) == "enabled") or (strlt(inc) == "on") then
-			CheeseSLSClient.db.profile.enabled = true
-		end
-
-		if (strlt(inc) == "disable") or (strlt(inc) == "disabled") or (strlt(inc) == "off") then
-			CheeseSLSClient.db.profile.enabled = false
-		end
-
-		if CheeseSLSClient.db.profile.enabled then
-			CheeseSLSClient:Print("CheeseSLSClient " .. L["is enabled."])
-		else
-			CheeseSLSClient:Print("CheeseSLSClient " .. L["is disabled."])
-		end
 
 	end
 
